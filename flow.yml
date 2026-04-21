@@ -1,0 +1,41 @@
+ID: Main
+Name: Start
+DI: Start the customer service automation process.
+MS: >
+  Isso é um programa de teste.
+  Envie 1 para versão,
+  2 para mensagem de teste,
+  3 para plataformas disponíveis.
+
+Options:
+  - ID: "01"
+    Name: Version Information
+    DI: It provides information about the code and application version.
+    MS: |
+      Versão atual: 0.0
+      Versão APP: 0.0
+      Versão Código: 0.0
+
+      Digite 0 para voltar.
+
+  - ID: "02"
+    Name: Test Message
+    DI: Test Message
+    MS: >
+      Isso é uma mensagem de teste.
+      Envie 1 para testar hierarquia ou 0 para voltar.
+    Options:
+      - ID: "01"
+        Name: Sub Test
+        DI: Test Message
+        MS: >
+          Subnível funcionando!
+          Digite 0 para voltar ou !0 para menu principal.
+
+  - ID: "03"
+    Name: Support List
+    DI: Support list
+    MS: >
+      Atualmente só tem suporte ao terminal.
+
+      Digite 0 para voltar.
