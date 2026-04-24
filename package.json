@@ -1,17 +1,14 @@
 {
-  "dependencies": {
-    "dotenv": "^17.4.2",
-    "js-yaml": "^4.1.1"
-  },
-  "name": "v0.0.0_estrutura-base",
-  "version": "0.0.0",
-  "description": "",
-  "main": "Node.js",
+  "name": "automation-flow-runner",
+  "version": "1.0.0",
+  "description": "Multi-YAML terminal automation flow runner",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "DEV_MODE=true node src/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs"
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "js-yaml": "^4.1.0"
+  }
 }
