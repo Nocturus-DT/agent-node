@@ -1,46 +1,45 @@
 require('dotenv').config();
 
-const fs = require('fs');
-const path = require('path');
+const fs       = require('fs');
+const path     = require('path');
 const readline = require('readline');
-const FlowManager = require('./script/FlowManager');
-const CommandParser = require('./script/CommandParser');
-const Logger = require('./script/Logger');
 
-const DEV_MODE = process.env.DEV_MODE === 'true';
-const APP_VERSION = process.env.APP_VERSION || '0.0.0';
+const FlowManager   = require('./script/FlowManager');
+const CommandParser  = require('./script/CommandParser');
+const Logger        = require('./script/Logger');
+const { boot }      = require('./script/Boot');
 
+// ── Configuração ────────────────────────────────────────────
+const DEV_MODE        = process.env.DEV_MODE === 'true';
+const APP_VERSION     = process.env.APP_VERSION || '0.0.0';
+const SRC_DIR         = path.join(__dirname, 'script');
+const AUTOMATIONS_DIR = path.join(__dirname, 'automations');
+
+// ── Instâncias ──────────────────────────────────────────────
 const manager = new FlowManager({ devMode: DEV_MODE, appVersion: APP_VERSION });
-const parser = new CommandParser(manager);
+const parser  = new CommandParser(manager, AUTOMATIONS_DIR);
 
-function loadFiles(dir) {
-  if (!fs.existsSync(dir)) return;
-
-  fs.readdirSync(dir).forEach(file => {
-    const fullPath = path.join(dir, file);
-
-    if (fs.statSync(fullPath).isDirectory()) {
-      loadFiles(fullPath); // recursivo
-    } else if (/\.ya?ml$/i.test(file)) {
-      manager._loadFile(fullPath); // ← arquivo individual, não diretório
-    }
+// ── Boot ────────────────────────────────────────────────────
+(async () => {
+  const result = await boot({
+    srcDir:         SRC_DIR,
+    automationsDir: AUTOMATIONS_DIR,
+    appVersion:     APP_VERSION,
+    devMode:        DEV_MODE,
+    manager,
   });
-}
 
-loadFiles(path.join(__dirname, 'automations'));
+  if (!result.ok) process.exit(1);
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+  // ── Terminal ──────────────────────────────────────────────
+  const rl = readline.createInterface({
+    input:  process.stdin,
+    output: process.stdout,
+  });
 
-Logger.banner(DEV_MODE, APP_VERSION, manager.listFlows());
-
-rl.on('line', (line) => {
-  parser.handle(line.trim());
-});
-
-rl.on('close', () => {
-  Logger.info('Sessão encerrada.');
-  process.exit(0);
-});
+  rl.on('line', (line) => parser.handle(line.trim()));
+  rl.on('close', () => {
+    Logger.info('Sessão encerrada.');
+    process.exit(0);
+  });
+})();

@@ -1,0 +1,16 @@
+ID: Flow_000002
+YAML_ID: "000002"
+Name: Novo Fluxo 000002
+DI: Descrição do fluxo 000002.
+MS: >
+  Mensagem principal do fluxo 000002.
+  Envie 1 para a primeira opção
+  ou 0 para voltar.
+
+Options:
+  - ID: "01"
+    Name: Primeira Opção
+    DI: Descrição da primeira opção.
+    MS: >
+      Você selecionou a primeira opção.
+      Digite 0 para voltar.

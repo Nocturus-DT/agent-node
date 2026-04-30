@@ -1,0 +1,27 @@
+{
+  "_comment": "Arquivo de controle dos YAMLs. Edite para registrar, priorizar e versionar seus fluxos.",
+  "_schemaRequired": "1.0",
+  "yamls": [
+    {
+      "id": "000000",
+      "path": "000000/000000.yaml",
+      "priority": 0,
+      "schemaVersion": "1.0",
+      "description": "Fluxo principal"
+    },
+    {
+      "id": "000001",
+      "path": "000001/000001.yaml",
+      "priority": 0,
+      "schemaVersion": "1.0",
+      "description": "Suporte técnico"
+    },
+    {
+      "id": "000002",
+      "path": "000002/000002.yaml",
+      "priority": 0,
+      "schemaVersion": "1.0",
+      "description": "Fluxo 000002"
+    }
+  ]
+}
